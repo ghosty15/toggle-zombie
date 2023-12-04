@@ -1,0 +1,253 @@
+:root {
+  --black: #030305;
+  --light: #fafafa;
+  --blood: #c80404;
+  --noblood: rgba(255, 255, 255, 0);
+  --skin: #eccab1;
+  --skin-2: #dc9c9c;
+  --eye-color: #6bb2ef;
+  --z-eye-color: #bcda9a;
+  --z-eye-color-2: #f2efce;
+  --z-skin: #b2cf90;
+  --z-skin-2: #7b955e;
+  --drop: 20px;
+  --toggle-w: 100px;
+}
+
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
+* {
+  font: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--black);
+  color: var(--light);
+  font-family: system-ui;
+  font-size: 1em;
+}
+
+a {
+  color: inherit;
+  padding: 2px;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+}
+a:focus, a:hover {
+  text-decoration-thickness: 2px;
+}
+a:focus {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+h1 {
+  font-family: "Bowlby One SC", display;
+  font-size: clamp(2rem, 1.0179rem + 4.1905vw, 3.375rem);
+  font-size: clamp(2.25rem, 1.5357rem + 3.0476vw, 3.25rem);
+  line-height: 1.1;
+  margin: 0 0 1.5rem 0;
+  text-shadow: 2px 2px 0 var(--light);
+}
+h1 span {
+  display: block;
+  font-size: clamp(1.5rem, 0.4286rem + 4.5714vw, 3rem);
+  font-size: clamp(2rem, 1.2857rem + 3.0476vw, 3rem);
+}
+
+.screen-reader-text {
+  border: 0;
+  clip: rect(1px, 1px, 1px, 1px);
+  -webkit-clip-path: inset(50%);
+          clip-path: inset(50%);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute !important;
+  width: 1px;
+  word-wrap: normal !important;
+}
+
+.z-toggle,
+.container,
+.credits {
+  transition: all 0.2s ease;
+}
+
+.container,
+.credits {
+  max-width: 600px;
+  text-align: center;
+  width: 90%;
+}
+
+.container {
+  position: relative;
+  background-color: var(--skin);
+  color: var(--black);
+  margin: clamp(60px, 10vw, 100px) auto 40px;
+}
+.container.z-toggled {
+  background-color: var(--z-skin);
+}
+.container.z-toggled .z-mode {
+  height: 100%;
+}
+.container.z-toggled .z-select::before {
+  background-color: var(--z-skin-2);
+}
+.container.z-toggled .z-toggle {
+  background-color: var(--z-eye-color-2);
+  border: var(--distance) solid var(--skin-2);
+}
+.container.z-toggled .z-toggle::before {
+  left: calc(100% - var(--eye-w));
+  background-color: var(--z-eye-color);
+}
+.container.z-toggled .z-toggle::after {
+  left: calc(100% - var(--distance) * 4);
+}
+.container.z-toggled + .credits {
+  color: var(--z-skin);
+}
+
+.credits {
+  color: inherit;
+  margin: 0 auto;
+  padding: 0 clamp(40px, 6vw, 60px);
+}
+
+.content {
+  position: relative;
+  z-index: 2;
+  background-color: transparent;
+  border: 5px var(--blood) solid;
+  padding: clamp(40px, 6vw, 60px);
+}
+
+.z-select {
+  --toggle-h: calc(var(--toggle-w) / 2);
+  --distance: calc((var(--toggle-w) / 100) * 4);
+  --eye-w: calc(var(--toggle-h) - (var(--distance) * 2));
+  --eye-socket: calc(var(--distance) * 2);
+  position: relative;
+  height: calc(var(--toggle-w) - var(--eye-socket));
+  width: calc(var(--toggle-w) + var(--eye-socket) * 2);
+  border-radius: 9999em;
+  margin: 0 auto 1.5rem;
+  padding: calc(var(--eye-w) / 4 + var(--distance) * 3) 0;
+}
+.z-select::after, .z-select::before {
+  content: "";
+  display: block;
+  left: 0;
+  top: 0;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-color: var(--skin-2);
+  border-radius: 9999em;
+  transition: all 0.2s ease-in-out;
+}
+.z-select::after {
+  background-color: var(--noblood);
+  background-image: radial-gradient(var(--noblood) 60%, var(--black));
+  box-shadow: 0 0 1px var(--black);
+}
+.z-select::before {
+  border: var(--distance) solid var(--black);
+}
+.z-select:has(.z-toggle:hover, .z-toggle:focus)::after, .z-select:has(.z-toggle:hover, .z-toggle:focus)::before {
+  height: calc(100% - calc(var(--eye-socket) * 2));
+  top: var(--eye-socket);
+}
+
+.z-toggle {
+  position: relative;
+  background: var(--light);
+  border: var(--distance) solid var(--skin);
+  border-radius: 999em;
+  box-shadow: 0 0 0 var(--distance) var(--black);
+  line-height: var(--toggle-h);
+  height: var(--toggle-h);
+  padding: 10px 20px;
+  width: var(--toggle-w);
+  z-index: 4;
+}
+.z-toggle:hover, .z-toggle:focus {
+  cursor: pointer;
+}
+.z-toggle:after, .z-toggle:before {
+  content: "";
+  display: block;
+  position: absolute;
+  transition: 1s all ease-in-out;
+}
+.z-toggle:before {
+  left: 0;
+  top: 0;
+  background-color: var(--eye-color);
+  background-image: radial-gradient(var(--black) 36%, var(--noblood) 36%, rgba(0, 0, 0, 0.6));
+  border: var(--distance) solid var(--black);
+  border-radius: 999em;
+  height: var(--eye-w);
+  width: var(--eye-w);
+}
+.z-toggle:after {
+  top: calc(var(--distance) * 3);
+  left: calc(var(--eye-w) - var(--distance) * 4);
+  background-color: var(--light);
+  border-radius: 999em;
+  height: calc(var(--toggle-w) / 10);
+  width: calc(var(--toggle-w) / 10);
+}
+
+.z-mode {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background-color: var(--noblood);
+  height: 0;
+  transition: all 4s ease;
+  transition-delay: 0.4s;
+}
+.z-mode > div {
+  --drop-3: calc(var(--drop) * 3);
+  --drop-2: calc(var(--drop) * 2);
+  --drop-05: calc(var(--drop) / 2);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: var(--drop-3);
+  background-color: var(--noblood);
+  background-image: radial-gradient(var(--blood) var(--drop-05), var(--noblood) var(--drop-05), var(--noblood) 100%), linear-gradient(90deg, var(--noblood) var(--drop), var(--blood) var(--drop), var(--blood) var(--drop-2), var(--noblood) var(--drop-2));
+  background-size: var(--drop-3) var(--drop-3), var(--drop-3) 100%;
+  background-position: 0 100%, 0 calc(100% - (var(--drop) + var(--drop-05)));
+  background-repeat: no-repeat;
+}
+.z-mode > div:nth-of-type(1) {
+  height: 50%;
+  left: calc(20% + var(--drop-3));
+}
+.z-mode > div:nth-of-type(2) {
+  height: 70%;
+  left: calc(10% + var(--drop-2));
+}
+.z-mode > div:nth-of-type(3) {
+  height: 100%;
+  left: calc(10% + var(--drop));
+}
+.z-mode > div:nth-of-type(4) {
+  height: 40%;
+  left: var(--drop-2);
+}
+.z-mode > div:nth-of-type(5) {
+  height: 80%;
+  left: 0;
+}
